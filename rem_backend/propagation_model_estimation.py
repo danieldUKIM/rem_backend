@@ -5,8 +5,8 @@ from __future__ import print_function
 from datetime import date, datetime, timedelta
 import math
 import mysql.connector
-import insert_query
-import query_data
+import rem_backend.insert_query
+import rem_backend.query_data
 from numpy import matrix
 from numpy import linalg
 import numpy
