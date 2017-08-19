@@ -4,3 +4,4 @@ from .localization import *
 from .propagation_model_estimation import *
 from .query_data import *
 from .rrm_events import *
+from .sensing_events import *
