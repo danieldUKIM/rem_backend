@@ -5,8 +5,8 @@ from __future__ import print_function
 from datetime import date, datetime, timedelta
 import mysql.connector
 import os
-import rem_backend.interpolation
-import rem_backend.localization
+import rem_backend.interpolation as interpolation
+import rem_backend.localization as localization
 import math
 
 __author__ = "Valentin Rakovic"
