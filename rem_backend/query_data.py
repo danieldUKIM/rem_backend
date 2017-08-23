@@ -383,7 +383,7 @@ def get_duty_cycle_heat_map(channel, timespan, nx=50, ny=50, ulx=0, uly=1000, dr
 		y.append(row[1])
 		val.append(row[2])
 	
-	val = interpolation.interpolation(x,y,val,ulx,dry,drx,uly,nx,ny,intp)
+	val = interpolation(x,y,val,ulx,dry,drx,uly,nx,ny,intp)
 	
 
 	cursor.close()
