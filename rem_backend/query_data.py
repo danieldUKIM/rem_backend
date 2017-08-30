@@ -14,10 +14,19 @@ __copyright__ = "Copyright (c) 2017, Faculty of Electrical Engineering and Infor
 __version__ = "0.1.0"
 __email__ = "{valentin}@feit.ukim.edu.mk"
 
+'''
+query data Module 
+Main REM interfacing function. Should be used by any RRM that connects to the platform
+'''
 
-
-#get capabilities of specific device form DB
 def get_device(mac_add):
+	'''
+	Returs information for a specific device 
+	Args:
+		mac_add: Mac address of the device
+	Returns:
+		device: Dictionary of device information. (channel capabilities, location, mode of operation, stauts, channel)
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -49,8 +58,14 @@ def get_device(mac_add):
 	return device; 
 
 
-#get pathloss model for a given channel form DB
 def get_pathloss_model(channel):
+	'''
+	Returs the path loss model for a specific channel 
+	Args:
+		channel: the channel of interest
+	Returns:
+		device: Dictionary of channel_model. (L0, alpha, sigma, d0)
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -78,8 +93,12 @@ def get_pathloss_model(channel):
 	return channel_model; 
 
 
-#get pathloss model form DB --> obsolete for now. maybe can be used for the future, if per device filtering is required
 def get_channel_model(links, channel, timespan):
+	'''
+	Returs the channel model for a specific number of links
+	Comment:  Obsolete for now. maybe can be used for the future, if per device filtering is required
+	
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -121,8 +140,16 @@ def get_channel_model(links, channel, timespan):
 
 
 
-#get all active transmiter locations from DB
 def get_tx_locations(channel, floor, timespan):
+	'''
+	Returs the tx locations for a specific channel floor and timespan
+	Args:
+		channel: the channel of interest
+		floor: the floor of interest
+		timepsan: the timespan of interest
+	Returns:
+		tx_loc: List of location tupples. (mac address, x and y coordinates, global location id, tx power)
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -143,8 +170,17 @@ def get_tx_locations(channel, floor, timespan):
 	return tx_loc; 
 
 
-#get channel status (idle or ocupied) from DB
 def get_channel_status(channel, threshold, timespan):
+	'''
+	Returs the channel status for a specific channel and timespan. Efectively cooperative spectrum sensing based on hard decision combining
+	Args:
+		channel: the channel of interest
+		threshold: duty cycle threshold
+		timepsan: the timespan of interest
+	Returns:
+		status: channel status (0--> free, 1--> ocupied)
+	'''
+	
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -164,8 +200,17 @@ def get_channel_status(channel, threshold, timespan):
 
 	return status; 
 
-#get channel status (idle or ocupied) from DB for a given area
 def get_channel_status_by_area(channel, threshold, timespan, ulx=0, uly=1000, drx=1000, dry=0):
+	'''
+	Returs the channel status for a specific channel, area and timespan. Efectively cooperative spectrum sensing based on hard decision combining
+	Args:
+		channel: the channel of interest
+		threshold: duty cycle threshold
+		timepsan: the timespan of interest
+		ulx, uly, drx, dry: upper left and lower right corner coordinates, of the area of interest
+	Returns:
+		status: channel status (0--> free, 1--> ocupied)
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -185,8 +230,17 @@ def get_channel_status_by_area(channel, threshold, timespan, ulx=0, uly=1000, dr
 
 	return status; 
 
-#get channel status by specific device (idle or ocupied) from DB
 def get_channel_status_by_device(channel, rx_add, threshold, timespan):
+	'''
+	Returs the channel status for a specific channel, device and timespan. 
+	Args:
+		channel: the channel of interest
+		rx_add: mac addres of the device
+		threshold: duty cycle threshold
+		timepsan: the timespan of interest
+	Returns:
+		status: channel status (0--> free, 1--> ocupied)
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -207,8 +261,17 @@ def get_channel_status_by_device(channel, rx_add, threshold, timespan):
 	return status; 
 
 
-#get status for all channels by device from DB
 def get_channel_status_all_by_device(rx_add, threshold, timespan):
+
+	'''
+	Returs the list of channel status for all channels, specific device and timespan.
+	Args:
+		rx_add: the channel of interest
+		threshold: duty cycle threshold
+		timepsan: the timespan of interest
+	Returns:
+		dc: list of tuple (channel, channel status) (0--> free, 1--> ocupied)
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -228,8 +291,16 @@ def get_channel_status_all_by_device(rx_add, threshold, timespan):
 
 	return dc; 
 
-#get status for all channels from DB
 def get_channel_status_all(threshold, timespan):
+
+	'''
+	Returs the list of channel status for all channels, and timespan. Efectively cooperative spectrum sensing based on hard decision combining 
+	Args:
+		threshold: duty cycle threshold
+		timepsan: the timespan of interest
+	Returns:
+		dc: list of tuple (channel, channel status) (0--> free, 1--> ocupied)
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -249,8 +320,15 @@ def get_channel_status_all(threshold, timespan):
 
 	return dc; 
 
-#get duty cycle from DB
 def get_duty_cycle(channel, timespan):
+	'''
+	Returs the duty cycle for a channel and timespan of interest
+	Args:
+		channel: channel of interest
+		timepsan: the timespan of interest
+	Returns:
+		dc: the duty cycle value
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -270,8 +348,16 @@ def get_duty_cycle(channel, timespan):
 
 	return dc; 
 
-#get duty cycle for a given area from DB
 def get_duty_cycle_by_area(channel, timespan, ulx=0, uly=1000, drx=1000, dry=0):
+	'''
+	Returs the duty cycle for a channel, area and timespan of interest
+	Args:
+		channel: channel of interest
+		timepsan: the timespan of interest
+		ulx, uly, drx, dry: upper left and lower right corner coordinates, of the area of interest
+	Returns:
+		dc: the duty cycle value
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -293,8 +379,17 @@ def get_duty_cycle_by_area(channel, timespan, ulx=0, uly=1000, drx=1000, dry=0):
 	return dc; 
 
 
-#get duty cycle by device from DB
 def get_duty_cycle_by_device(channel, rx_add, timespan):
+
+	'''
+	Returs the duty cycle for a channel, device and timespan of interest
+	Args:
+		channel: channel of interest
+		rx_add: the mac address of the device
+		timepsan: the timespan of interest
+	Returns:
+		dc: the duty cycle value
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -315,8 +410,15 @@ def get_duty_cycle_by_device(channel, rx_add, timespan):
 	return dc; 
 
 
-#get duty cycle for all channels from DB
 def get_duty_cycle_all_channels_by_device(rx_add, timespan):
+	'''
+	Returs the duty cycle for all channels, for a given device and timespan of interest
+	Args:
+		rx_add: the mac address of the device
+		timepsan: the timespan of interest
+	Returns:
+		dc: list of tupple (channel,duty cycle)
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -337,8 +439,14 @@ def get_duty_cycle_all_channels_by_device(rx_add, timespan):
 	return dc; 
 
 
-#get duty cycle for all channels from DB
 def get_duty_cycle_all_channels(timespan):
+	'''
+	Returs the duty cycle for all channels, and timespan of interest
+	Args:
+		timepsan: the timespan of interest
+	Returns:
+		dc: list of tupple (channel,duty cycle)
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -358,8 +466,18 @@ def get_duty_cycle_all_channels(timespan):
 
 	return dc; 
 
-#get duty cycle for a given area from DB
 def get_duty_cycle_heat_map(channel, timespan, nx=50, ny=50, ulx=0, uly=1000, drx=1000, dry=0, intp=1):
+	'''
+	Returs the duty cycle heatmap for a specific channel, area and timespan of interest
+	Args:
+		channel: the channel of interest
+		timepsan: the timespan of interest
+		ulx, uly, drx, dry: upper left and lower right corner coordinates, of the area of interest
+		nx,ny: grid resolution of heat map
+		intp: interpolation type. Please check interpoaltion module for more information
+	Returns:
+		val: vector of calculated/interpolated values
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -392,8 +510,17 @@ def get_duty_cycle_heat_map(channel, timespan, nx=50, ny=50, ulx=0, uly=1000, dr
 
 	return val;
 
-#get duty cycle for a given area from DB
 def estimate_tx_location(addr, timespan=60, ulx=0, uly=15, drx=32, dry=0, nx=50, ny=50, nz=50):
+	'''
+	Returs the estimated location of a tx of interest
+	Args:
+		addr: the mac address of the localized device
+		timepsan: the timespan of interest
+		ulx, uly, drx, dry: upper left and lower right corner coordinates, of the area of interest
+		nx,ny,nz: grid resolution of the localization algorithm
+	Returns:
+		val: tuple consisted of estimated x,y,z coordinates and respective estimated tx power (x,y,z,txpow)
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')

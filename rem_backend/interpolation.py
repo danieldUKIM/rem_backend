@@ -7,8 +7,24 @@ __copyright__ = "Copyright (c) 2017, Faculty of Electrical Engineering and Infor
 __version__ = "0.1.0"
 __email__ = "{valentin}@feit.ukim.edu.mk"
 
+'''
+Interpolation Module 
+Calculates spatial interpolation for the REM backend. Used for duty cycle purposes. 
+'''
+
 
 def interpolation(xs,ys,zs,xmin,ymin,xmax,ymax,nx=50,ny=50,in_type=1):
+	'''
+	Main interfacing function for the interpolation. 
+	Args:
+		xs,ys: vectors of coordinates for the x, y, axis
+		zs: vector of measured values on coordinates xs, ys
+		xmin,ymin,xmax,ymax: range of min and max values for coordinates
+		nx,ny: resolution for x,y axis
+		in_type: interpolation algorithm 
+	Returns:
+		res (tuple consisted of x,y coordinates and respective interpolated value)
+	'''
 	# Setup of the interpolation data sets
 	#n = len(x)
 	#x, y, z = map(np.random.random, [n, n, n])
@@ -54,6 +70,15 @@ def interpolation(xs,ys,zs,xmin,ymin,xmax,ymax,nx=50,ny=50,in_type=1):
 	return res
 
 def idw(x, y, z, xi, yi):
+	'''
+	Iverse weighteddistance based interpolation algorithm
+	Args:
+		x,y: vectors of coordinates for the x, y axis
+		z: vector of dutycycle values
+		xi, yi: grid of location points used for interpolation
+	Returns:
+		zi (vector of calculated/interpolated values)
+	'''
 	dist = distance_matrix(x,y, xi,yi)
 
     # In IDW, weights are 1 / distance --> this can change based on some propagation model preferences and information
@@ -67,6 +92,15 @@ def idw(x, y, z, xi, yi):
 	return zi
 
 def rbf(x, y, z, xi, yi):
+	'''
+	Radial basis function based interpolation algorithm
+	Args:
+		x,y: vectors of coordinates for the x, y axis
+		z: vector of dutycycle values
+		xi, yi: grid of location points used for interpolation
+	Returns:
+		zi (vector of calculated/interpolated values)
+	'''
 	interp = Rbf(x, y, z, function='linear')
 	return interp(xi, yi)
 

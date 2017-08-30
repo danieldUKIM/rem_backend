@@ -8,7 +8,23 @@ __version__ = "0.1.0"
 __email__ = "{valentin}@feit.ukim.edu.mk"
 
 
+'''
+Localization Module 
+Used for processing of the localization process in the REM backend
+'''
+
 def ML_grid(xs, ys, zs, rss, ulx=0, uly=15, drx=32, dry=0, nx=50, ny=50, nz=50):
+	'''
+	Localization process based on ML algorithm
+	Args:
+		xs,ys, zs: vectors of coordinates for the x, y, z axis
+		rss: vector of measured values on coordinates xs, ys, zs
+		ulx, uly, drx, dry: upper left and lower right corner coordinates of the area of interest for the loc process
+		nx,ny, nz: resolution for x,y,z axis
+		in_type: interpolation algorithm 
+	Returns:
+		results (tuple consisted of estimated x,y,z coordinates and respective estimated tx power)
+	'''
 
 	
 

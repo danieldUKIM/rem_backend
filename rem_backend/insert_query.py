@@ -11,8 +11,17 @@ __copyright__ = "Copyright (c) 2017, Faculty of Electrical Engineering and Infor
 __version__ = "0.1.0"
 __email__ = "{valentin}@feit.ukim.edu.mk"
 
-#insert devices in DB
+'''
+Insert query Module 
+Iserts data to the REM database
+'''
+
 def insert_device_location(data_device):
+	'''
+	Inserts device location in the database
+	Args:
+		data_device: the data used for inserting
+	'''
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root', password='rem', host=host_env,database='remdb')
 	cursor = cnx.cursor()
@@ -29,8 +38,12 @@ def insert_device_location(data_device):
 	cnx.close()
 	return;
 
-#insert devices in DB
+
 def device_init():
+	'''
+	Sets all devices to inactive
+	
+	'''	
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root', password='rem', host=host_env,database='remdb')
 	cursor = cnx.cursor()
@@ -45,8 +58,12 @@ def device_init():
 	cnx.close()
 	return;
 
-#update device capabilities in DB
 def insert_device_capabilities(data_device):
+	'''
+	Inserts device capabilities in the database
+	Args:
+		data_device: the data used for inserting
+	'''
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root', password='rem', host=host_env,database='remdb')
 	cursor = cnx.cursor()
@@ -67,8 +84,12 @@ def insert_device_capabilities(data_device):
 	cnx.close()
 	return;
 
-#update device capabilities in DB
 def update_device_status(data_device):
+	'''
+	Inserts device status in the database
+	Args:
+		data_device: the data used for inserting
+	'''
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root', password='rem', host=host_env,database='remdb')
 	cursor = cnx.cursor()
@@ -96,8 +117,12 @@ def update_device_status(data_device):
 	cnx.close()
 	return;
 
-#insert duty cycle in DB
 def insert_duty_cycle(data_duty_cycle):
+	'''
+	Inserts duty cycle information in the database
+	Args:
+		data_duty_cycle: the data used for inserting
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -115,8 +140,12 @@ def insert_duty_cycle(data_duty_cycle):
 	cnx.close()
 	return;
 
-#insert tx estimated location in DB
 def insert_tx_location(data_tx_location):
+	'''
+	Inserts localized tx information in the database
+	Args:
+		data_tx_location: the data used for inserting
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -135,8 +164,12 @@ def insert_tx_location(data_tx_location):
 	return;
 
 
-#insert propagation model in DB
 def insert_propagation_model(data_prop_model):
+	'''
+	Inserts propagation model information in the database
+	Args:
+		data_prop_model: the data used for inserting
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -155,8 +188,12 @@ def insert_propagation_model(data_prop_model):
 	return;
 
 
-#insert rssi measurements in DB
 def insert_rssi_measurement(data_rssi):
+	'''
+	Inserts rssi measurement information in the database
+	Args:
+		data_rssi: the data used for inserting
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -175,8 +212,13 @@ def insert_rssi_measurement(data_rssi):
 	return;
 
 
-#insert global point location in DB
+
 def insert_global_location(data_location):
+	'''
+	Inserts global location information in the database
+	Args:
+		data_location: the data used for inserting
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -199,8 +241,13 @@ def insert_global_location(data_location):
 	cnx.close()
 	return locid;
 
-#insert ap statistics in DB
+
 def insert_ap_statistics(ap_data):
+	'''
+	Inserts AP statistics information in the database
+	Args:
+		ap_data: the data used for inserting
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')
@@ -219,8 +266,12 @@ def insert_ap_statistics(ap_data):
 	cnx.close()
 	return;
 
-#insert link statistics in DB
 def insert_link_statistics(link_data):
+	'''
+	Inserts link statistics information in the database
+	Args:
+		link_data: the data used for inserting
+	'''
 
 	host_env = os.getenv('MYSQL_ENV', 'localhost')
 	cnx = mysql.connector.connect(user='root',password='rem', host=host_env,database='remdb')

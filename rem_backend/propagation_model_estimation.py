@@ -16,9 +16,22 @@ __copyright__ = "Copyright (c) 2017, Faculty of Electrical Engineering and Infor
 __version__ = "0.1.0"
 __email__ = "{valentin}@feit.ukim.edu.mk"
 
+'''
+Propagation model estimation Module 
+Calculates propagation model for the REM backend
+'''
 
-#calculates distance in meters between two nodes
+
 def get_distance(dev1_mac, dev2_mac):
+	'''
+	Calculates distance between to devices
+	Args:
+		dev1_mac: mac addres of the first device
+		dev2_mac: mac addres of the second device
+		
+	Returns:
+		distance: the distance between the devices in meters
+	'''
 
 	cnx = mysql.connector.connect(user='root',password='rem', database='remdb')
 	cursor = cnx.cursor()
@@ -103,8 +116,18 @@ def get_distance(dev1_mac, dev2_mac):
 
 	return distance; 
 
-#get pathloss between two specific active pair of devices
 def get_PL_link(dev1_mac, dev2_mac, timespan, chann):
+	'''
+	Calculates the path loss on the link between two devices
+	Args:
+		dev1_mac: mac addres of the first device
+		dev2_mac: mac addres of the second device
+		timespan: the timespan of interest
+		chann: the channel of interest
+		
+	Returns:
+		PL: the pathloss value in dB
+	'''
 
 	cnx = mysql.connector.connect(user='root',password='rem', database='remdb')
 	cursor = cnx.cursor()
@@ -129,8 +152,16 @@ def get_PL_link(dev1_mac, dev2_mac, timespan, chann):
 
 	return PL; 
 
-#get pathloss between all active pair of devices on a given channel
 def get_PL_chann_dev(timespan, chann):
+	'''
+	get pathloss between all active pair of devices on a given channel
+	Args:
+		timespan: the timespan of interest
+		chann: the channel of interest
+		
+	Returns:
+		PL: the pathloss value in dB
+	'''
 
 	cnx = mysql.connector.connect(user='root',password='rem', database='remdb')
 	cursor = cnx.cursor()
@@ -155,8 +186,16 @@ def get_PL_chann_dev(timespan, chann):
 	return PL; 
 
 
-#get pathloss on a given channel
 def get_PL_chann(timespan, chann):
+	'''
+	get pathloss on a given channel
+	Args:
+		timespan: the timespan of interest
+		chann: the channel of interest
+		
+	Returns:
+		PL: the pathloss value in dB
+	'''
 
 	PL_data = get_PL_chann_dev(timespan, chann)
 
@@ -168,8 +207,18 @@ def get_PL_chann(timespan, chann):
 	return PL; 
 
 
-#get pathloss on a given channel between any two devices
 def get_PL_chann_link(timespan, chann, tx, rx):
+	'''
+	get the path loss on a given link between two devices
+	Args:
+		timespan: the timespan of interest
+		chann: the channel of interest
+		tx: tx of interest
+		rx: rx of interest
+		
+	Returns:
+		data: dictionary of the path loss L0, exp, sigma 
+	'''
 
 	ch_mod = get_chann_model(timespan, chann)
 	d = get_distance(tx,rx)
@@ -178,8 +227,16 @@ def get_PL_chann_link(timespan, chann, tx, rx):
 	return PL; 
 
 
-#get the model L0, exp, sigma on a given channel
 def get_chann_model(timespan, chann):
+	'''
+	get the model L0, exp, sigma on a given channel (reference distance d0 = 1m)
+	Args:
+		timespan: the timespan of interest
+		chann: the channel of interest
+		
+	Returns:
+		data: dictionary of the path loss L0, exp, sigma 
+	'''
 
 	hth = numpy.zeros(shape=(2,2))
 	HtH = numpy.asmatrix(hth)
